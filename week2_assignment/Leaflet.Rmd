@@ -1,0 +1,32 @@
+---
+title: "Developing Data Products Week2: R Markdown and Leaflet"
+output: html_document
+date: "Jul 04, 2019"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Processing
+
+In this example, we will use the classic data set "SacramentocrimeJanuary2006" to make
+the map. Firstly, we need to pick up the latitude and longitude columns from the dataframe.
+Actually, you can use any data including the map latitude and longitude.
+
+```{r, echo=TRUE, results=FALSE}
+data <- "http://samplecsvs.s3.amazonaws.com/SacramentocrimeJanuary2006.csv"
+df <- read.csv(url(data))
+df <- df[sample(nrow(df), 800), c(8,9)]
+```
+
+## Plot the Map
+
+Please install Leaflet package if you don't have it in your R studio. Then you can also map plots, for example:
+```{r Leaflet, echo=TRUE}
+library(leaflet)
+df %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(clusterOptions = markerClusterOptions())
+```
